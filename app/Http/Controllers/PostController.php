@@ -47,7 +47,18 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        {
+            if ($id) {
+                $post = Post::find($id);
+                // $data = [
+                //     'dress' => $dress,
+                // ];
+                // return view('dresses.show', $data);
+                return view('posts.show', compact('post'));
+    
+            }
+            abort(404);
+        }
     }
 
     /**
@@ -79,8 +90,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return redirect()->route('posts.index')->with('status', 'Elemento cancellato');
     }
 }
